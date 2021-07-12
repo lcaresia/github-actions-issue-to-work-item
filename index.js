@@ -673,8 +673,6 @@ function getValuesFromPayload(payload, env) {
 		}
 	};
 
-  console.log('Existe body ?', vm.body)
-
   if(vm.body) {
     vm.body = md.render(vm.body);
   }
