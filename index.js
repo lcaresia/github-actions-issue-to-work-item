@@ -1,6 +1,11 @@
 const core = require(`@actions/core`);
 const github = require(`@actions/github`);
 const azdev = require(`azure-devops-node-api`);
+const md = require('markdown-it')({
+  html: true,
+  linkify: true,
+  typographer: true
+});
 
 const debug = false; // debug mode for testing...always set to false before doing a commit
 const testPayload = []; // used for debugging, cut and paste payload
@@ -667,6 +672,10 @@ function getValuesFromPayload(payload, env) {
       logLevel: env.log_level != undefined ? env.log_level : 100
 		}
 	};
+
+  if(vm.body) {
+    vm.body = md.render(vm.body);
+  }
 
   // label is not always part of the payload
   if (payload.label != undefined) {
